@@ -2,6 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { ArrowRight, Home, Briefcase, Code, Mail } from 'lucide-react';
 
 export default function App() {
+  // ----------------------------------------------------------------------
+  // ⚙️ MANUAL SPACING CONFIGURATION DASHBOARD
+  // Adjust these values anytime to control the layout distances perfectly!
+  // ----------------------------------------------------------------------
+  const layoutConfig = {
+    // Shifting the centered Home content upward toward the topbar (use negative for up, positive for down)
+    homeVerticalShift: "-40px", 
+    
+    // The exact distance pulling the footer closer to the Contact text block
+    contactToFooterGap: "40px",
+    
+    // Elegant uniform padding inside the footer container
+    footerInnerPadding: "16px"
+  };
+  // ----------------------------------------------------------------------
+
   const [activeSection, setActiveSection] = useState('home');
 
   // Monitor scrolling fluidly using IntersectionObserver for flawless device execution
@@ -10,7 +26,7 @@ export default function App() {
     
     const observerOptions = {
       root: null,
-      rootMargin: '-30% 0px -30% 0px', // Triggers switch when section occupies main viewport view
+      rootMargin: '-30% 0px -30% 0px',
       threshold: 0.1
     };
 
@@ -35,10 +51,8 @@ export default function App() {
   const scrollToSection = (id) => {
     const target = document.getElementById(id);
     if (target) {
-      // Precise offset configuration handling
-      const headerOffset = 0;
       const elementPosition = target.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      const offsetPosition = elementPosition + window.pageYOffset;
 
       window.scrollTo({
         top: offsetPosition,
@@ -66,7 +80,7 @@ export default function App() {
         </div>
       </header>
 
-      {/* --- RECONFIGURED FLOATING NAV DOCK WITH SEMANTIC ACCURATE ICONS --- */}
+      {/* --- RESPONSIVE FLOATING NAV DOCK --- */}
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 lg:left-auto lg:right-8 lg:top-1/2 lg:bottom-auto lg:-translate-y-1/2 lg:translate-x-0 z-50">
         <div className="flex lg:flex-col items-center gap-2.5 bg-neutral-950/80 border border-neutral-800 p-2 rounded-full shadow-2xl backdrop-blur-lg">
           {[
@@ -86,7 +100,6 @@ export default function App() {
               aria-label={item.label}
             >
               {item.icon}
-              {/* Desktop Hover Tooltips */}
               <span className="absolute right-14 top-1/2 -translate-y-1/2 bg-neutral-900 text-neutral-200 border border-neutral-800 text-[10px] px-2.5 py-1 rounded hidden lg:group-hover:block pointer-events-none tracking-wide whitespace-nowrap">
                 {item.label}
               </span>
@@ -95,9 +108,12 @@ export default function App() {
         </div>
       </div>
 
-      {/* --- 1. HOME / HERO SECTION --- */}
-      <section id="home" className="display-section px-6">
-        <div className="max-w-4xl mx-auto text-center w-full pt-16">
+      {/* --- 1. HOME / HERO SECTION (True Center Aligned with Manual Top Shift) --- */}
+      <section id="home" className="display-section px-6 justify-center">
+        <div 
+          className="max-w-4xl mx-auto text-center w-full transition-transform duration-300"
+          style={{ transform: `translateY(${layoutConfig.homeVerticalShift})` }}
+        >
           {/* Status Badge */}
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-800 bg-neutral-950/60 backdrop-blur-sm mb-6 sm:mb-8">
             <span className="relative flex h-1.5 w-1.5 bg-neutral-500 rounded-full overflow-hidden">
@@ -122,7 +138,7 @@ export default function App() {
       </section>
 
       {/* --- 2. PRODUCTS SECTION --- */}
-      <section id="products" className="display-section px-6 border-t border-neutral-900/60">
+      <section id="products" className="display-section px-6 border-t border-neutral-900/60 justify-center">
         <div className="max-w-5xl mx-auto w-full pt-12 pb-6">
           <div className="mb-6 sm:mb-10 text-left">
             <span className="text-[10px] sm:text-xs tracking-[0.2em] uppercase text-neutral-500 font-medium block mb-1">Products</span>
@@ -132,7 +148,6 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-            {/* Product Card 1 */}
             <div className="group relative p-5 sm:p-8 rounded-xl border border-neutral-900 hover:border-neutral-500 bg-neutral-950/40 backdrop-blur-sm flex flex-col justify-between min-h-[170px] sm:min-h-[240px] transition-all duration-300">
               <div>
                 <div className="flex justify-between items-center mb-4 sm:mb-8">
@@ -151,7 +166,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Product Card 2 */}
             <div className="group relative p-5 sm:p-8 rounded-xl border border-neutral-900 hover:border-neutral-500 bg-neutral-950/40 backdrop-blur-sm flex flex-col justify-between min-h-[170px] sm:min-h-[240px] transition-all duration-300">
               <div>
                 <div className="flex justify-between items-center mb-4 sm:mb-8">
@@ -174,7 +188,7 @@ export default function App() {
       </section>
 
       {/* --- 3. SERVICES SECTION --- */}
-      <section id="services" className="display-section px-6 border-t border-neutral-900/60">
+      <section id="services" className="display-section px-6 border-t border-neutral-900/60 justify-center">
         <div className="max-w-5xl mx-auto w-full pt-12 pb-6">
           <div className="mb-6 sm:mb-10 text-left">
             <span className="text-[10px] sm:text-xs tracking-[0.2em] uppercase text-neutral-500 font-medium block mb-1">Services</span>
@@ -207,11 +221,11 @@ export default function App() {
         </div>
       </section>
 
-      {/* --- 4. CONTACT & BASE FOOTER SECTION --- */}
-      <section id="contact" className="display-section px-6 border-t border-neutral-900/60 justify-between pt-24 pb-10">
-        <div /> {/* Balance Spacer */}
+      {/* --- 4. CONTACT & FOOTER (True Center Aligned with Independent Footer Placement) --- */}
+      <section id="contact" className="display-section px-6 border-t border-neutral-900/60 justify-center flex flex-col relative">
         
-        <div className="max-w-4xl mx-auto text-center space-y-3">
+        {/* Core Content Block - Centered flawlessly on the screen layout */}
+        <div className="max-w-4xl mx-auto text-center space-y-3 w-full my-auto">
           <h2 className="text-3xl sm:text-5xl font-medium text-white tracking-tight leading-tight">
             Our products are currently <br />
             <span className="text-neutral-400">in development.</span>
@@ -228,8 +242,14 @@ export default function App() {
           </a>
         </div>
 
-        {/* Base Footer */}
-        <footer className="w-full max-w-5xl mx-auto pt-8 border-t border-neutral-900/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left mt-auto">
+        {/* Base Footer - Clustered cleanly at the bottom using layoutConfig controls */}
+        <footer 
+          className="w-full max-w-5xl mx-auto border-t border-neutral-900/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left"
+          style={{ 
+            marginTop: layoutConfig.contactToFooterGap, 
+            paddingBottom: layoutConfig.footerInnerPadding 
+          }}
+        >
           <p className="text-[10px] sm:text-[11px] text-neutral-500 tracking-wide font-light">
             &copy; 2026 Fraevo. Building the future through technology.
           </p>
