@@ -3,13 +3,38 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
+  html, body {
+    margin: 0;
+    padding: 0;
     background-color: #000000;
+    overflow-x: hidden;
+  }
+
+  /* Core container enabling vertical slide snapping tracking */
+  .snap-container {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Force each section to be EXACTLY the height of the current viewport device screen */
+  .snap-section {
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height to fix mobile browser address bar layout jumps */
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }
 
+/* Background vertical grid lines from your layout screenshots */
 .bg-grid-lines {
   background-size: 40px 100%;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
 }
