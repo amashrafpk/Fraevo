@@ -116,7 +116,7 @@ export default function App() {
         >
           {/* Status Badge */}
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-800 bg-neutral-950/60 backdrop-blur-sm mb-6 sm:mb-8">
-            <span className="relative flex h-1.5 w-1.5 bg-neutral-900 rounded-full overflow-hidden">
+            <span className="relative flex h-1.5 w-1.5 bg-neutral-850 rounded-full overflow-hidden">
               <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-white"></span>
             </span>
             <span className="text-[10px] sm:text-[11px] tracking-wide text-neutral-400 font-normal">Currently in development</span>
